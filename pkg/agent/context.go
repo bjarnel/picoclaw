@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"time"
 
@@ -44,16 +43,12 @@ func NewContextBuilder(workspace string) *ContextBuilder {
 func (cb *ContextBuilder) getIdentity() string {
 	now := time.Now().Format("2006-01-02 15:04 (Monday)")
 	workspacePath, _ := filepath.Abs(filepath.Join(cb.workspace))
-	runtime := fmt.Sprintf("%s %s, Go %s", runtime.GOOS, runtime.GOARCH, runtime.Version())
-
-	return fmt.Sprintf(`# picoclaw 🦞
+	
+	return fmt.Sprintf(`# picoclaw
 
 You are picoclaw, a helpful AI assistant.
 
 ## Current Time
-%s
-
-## Runtime
 %s
 
 ## Workspace
@@ -69,7 +64,7 @@ Your workspace is at: %s
 2. **Be helpful and accurate** - When using tools, briefly explain what you're doing.
 
 3. **Memory** - When interacting with me if something seems memorable, update %s/memory/MEMORY.md`,
-		now, runtime, workspacePath, workspacePath, workspacePath, workspacePath, workspacePath)
+		now, workspacePath, workspacePath, workspacePath, workspacePath, workspacePath)
 }
 
 func (cb *ContextBuilder) BuildSystemPrompt() string {
